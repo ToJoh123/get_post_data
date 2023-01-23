@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form >
+    <button id="get">Get🐐</button>
+    <button id="post">Post 📧</button>
+    <input type="text" id="input"></input>
+</form>
+    <script>
+        const getBtn = document.getElementById('get');
+        const postBtn = document.getElementById('post');
+        const input = document.getElementById('input');
+
+        const baseUrl = 'http://localhost:3000/';
+
+        getBtn.addEventListener('click', getGoat);
+        postBtn.addEventListener('click', postGoat);
+
+        async function getGoat(e) {
+            e.preventDefault();
+            const res = await fetch(baseUrl + 'info/test?key=newkey',
+            {
+                method: 'GET',
+            });
+            console.log(res);
+            const data = await res.json();
+            input.value = data.info
+        }
+
+
+        async function postGoat(e) {
+            e.preventDefault();
+            if (input.value == '') {
+                return;
+            }
+            
+            const res = await fetch(baseUrl,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    parcel: input.value
+                })
+                
+            });
+        }
+    </script>
+</body>
+</html>
